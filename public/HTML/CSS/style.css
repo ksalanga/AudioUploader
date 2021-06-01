@@ -1,0 +1,444 @@
+@charset "utf-8";
+
+/* Resets */
+body, html{
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, p, ul{
+    margin: 0;
+    padding: 0;
+}
+
+.recordingsButton {
+    width: 95%;
+    font-weight: bold;
+    height: 50px;
+    border-radius: 4px;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#parent {
+    position: relative;
+}
+
+.center {
+    text-align: center;
+}
+
+.child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -35px 0 0 -35px;
+    transform: translate(-50%, -50%);
+}
+
+/* Grid Setup */
+.wrapper{
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4fr 6fr 4fr 1fr;
+    grid-template-areas: "top topmid nav"
+                        "left box right"
+                        "bot bot bot"
+                        "bar bar bar";
+}
+
+.wrapper > h1 {
+    position: relative;
+    top: 25px;
+    grid-area: topmid;
+    text-align: center;
+}
+
+.wrapper > main {
+    overflow-y: auto;
+    overflow-x: hidden;
+    grid-area: box;
+    text-align: center;
+}
+
+.mainbox{
+    grid-area: box;
+    background-color: #FF4E4E;
+    filter: drop-shadow(.5em .5em 0.2em rgb(146, 146, 146));
+}
+
+nav{
+    grid-area: nav;
+    text-align: right;
+}
+
+.mainbar{
+    grid-area: bar;
+    display: flex;
+    background-color: #FF4E4E;
+}
+
+html{
+    background-color: #fbf5f5;
+}
+/* Credits Grid */
+.wrapperCR{
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr 20fr 10fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "bar main nav"
+                        "bar main null"
+                        "bar main null"
+                        "bar main null";
+}
+
+
+
+/* Type */
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mainbox, .mainbar{
+    color: white;
+}
+
+nav span h2{
+    color: #FF4E4E;
+}
+
+nav span h2:hover{
+    color:#fb1a1a;
+}
+
+.mainbox h1{
+    font-size: 4rem;
+}
+
+.mainbox h3{
+    font-size: .9em;
+}
+
+.mainbar .homeh3{
+    padding-right: 2rem;
+    text-align: center;
+}
+/* Credits type */
+.content{
+    color: #FF4E4E;
+}
+.content span{
+    display: flex;
+    line-height: 2.5em;
+}
+
+.content span p{
+    margin-left: .5em;
+    font-size: 1.2rem;
+}
+
+.content span h3{
+    font-size: 1.3rem;
+}
+
+.content h1{
+    font-size: 3rem;
+}
+
+.patreon{
+    margin-top: 2rem;
+}
+
+.content a{
+    color: #FF4E4E;
+}
+
+.content a:hover{
+    color:black;
+}
+/* Recording list styling */
+ul{
+    color: #ff3d3d;
+    padding-left: 4rem;
+    padding-top: 2rem;
+    font-size: 1.2rem;
+}
+
+ul li:hover{
+    color: red;
+}
+
+ul li:active{
+    color: black;
+}
+
+
+
+/* Margins & Padding */
+.mainbox{
+    padding: 1rem;
+}
+
+nav{
+    padding: 2rem;
+    padding-right: 3rem;
+}
+
+.mainbar{
+    padding: 1rem;
+    padding-left: 3rem;
+    justify-content: center;
+
+}
+
+.mainbar h3{
+    padding-top: .3rem;
+}
+
+.mainbar p{
+    padding-left: .5em;
+    padding-right: 4rem;
+    padding-top: .47rem;
+}
+
+.mainbar p:nth-of-type(2){
+    margin-right: 10rem;
+}
+/* Credits Padding + Margins */
+.content{
+    padding: 1.5rem;
+    padding-left: 2rem;
+}
+
+.section2{
+    margin-top: 5rem;
+    max-width: 85%;
+}
+
+
+
+/* Nav SVG */
+nav span svg{
+    padding-top: .4em;
+    max-width: 1em;
+    max-height: 2em;
+    margin-left: .8em;
+}
+
+nav span{
+    display: flex;
+    justify-content: right;
+}
+
+nav a{
+    display: flex;
+    text-decoration: none;
+}
+
+.third:hover .navarrow{
+    fill:none;
+    stroke:#FF4E4E;
+    stroke-miterlimit:10;
+    stroke-width:4px;
+}
+
+.second:hover .navarrow{
+    fill:none;
+    stroke:#FF4E4E;
+    stroke-miterlimit:10;
+    stroke-width:4px;
+}
+.first:hover .navarrow{
+    fill:none;
+    stroke:#FF4E4E;
+    stroke-miterlimit:10;
+    stroke-width:4px;
+}
+
+.navarrow{
+    fill:#FF4E4E;
+}
+
+/* Mainbox SVG */
+.mainbox svg{
+    display: block;
+    max-width: 7rem;
+    margin: auto;
+    margin-top: 1.5rem;
+}
+
+.cls-1{
+    fill:#fff;
+}
+
+.cls-2{
+    fill:#FF4E4E;
+}
+
+
+.mainbox svg:active .cls-1{
+    fill:#ff3d3d;
+}
+
+.mainbox svg:active .cls-2{
+    fill:#fff;
+}
+
+.mainbox svg:active {
+    filter: drop-shadow(0em 0em .4em rgb(255, 255, 255));
+}
+
+
+
+/* Mainbox Functionality Styling/setup */
+.function{
+    display: flex;
+    justify-content: right;
+}
+
+.function{
+    margin-top: 3rem;
+}
+
+.function button{
+    margin-left: .5rem;
+}
+
+input[type=text]{
+    border: #fb1a1a;
+}
+
+input[type=text]:focus{
+    background-color: #f7f7ff;
+    border-color: red;
+}
+
+.function button{
+    background-color: white;
+    color:#ff3d3d;
+    text-decoration: none;
+    border-radius: .5em;
+}
+
+.function button:hover{
+    border-color: red;
+    border-style: solid;
+}
+
+.function button:active{
+    background-color: #ff9d9d;
+    color:white;
+    border-color: #ff3d3d;
+}
+
+
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 900px) {
+    .wrapper{
+        max-height: 200vw;
+        max-width: 100vw;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 4fr 6fr 4fr 1fr;
+        grid-template-areas: "nav"
+                            "box"
+                            "bot"
+                            "bar";
+    }
+
+    /* Mainbox */
+    .function{
+        display: flex;
+        justify-content: center;
+    }
+
+    .mainbox h3, h1{
+        text-align: center;
+    }
+
+    .mainbox h1{
+        font-size: 3rem;
+    }
+
+    
+    /* Mainbar */
+
+    .mainbar{
+        display: block;
+    }
+
+    .mainbar p{
+        padding-left: 0;
+        padding-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .mainbar p:nth-of-type(2){
+        margin-bottom: 2rem;
+    }
+
+
+
+    /* Nav */
+    nav{
+        display: flex;
+        justify-content: center;
+    }
+
+    nav span {
+        line-height: 2em;
+    }
+
+    nav span svg{
+        padding-top: .3rem;
+        margin-right: 2em;
+        padding-bottom: 0rem;
+    }
+    
+
+
+    /* All recordings */
+    ul{
+        padding-top: 0;
+    }
+    /* Credits */
+    .wrapperCR{
+        max-height: 200vh;
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 1fr 16fr;
+        grid-template-rows: 1fr 15fr;
+        grid-template-areas: "bar nav"
+                            "bar main";
+    }
+
+    .wrapperCR h1{
+        text-align: left;
+    }
+
+    .content span{
+        display: block;
+    }
+
+    .content span p{
+        margin-left: 0;
+    }
+
+
+
+    /* Homepage nav fix */
+    .exclude span svg{
+        padding-top: .2rem;
+    }
+    /* Homepage Mainbar fix */
+    .mainbar .homeh3{
+        padding-right: 2rem;
+        text-align: center;
+    }
+}

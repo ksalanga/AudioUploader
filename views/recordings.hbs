@@ -1,0 +1,64 @@
+<div class="wrapper" id="parent">
+    <h1>Recordings</h1>
+    <nav>
+        <span class="first">
+            <a href="/">
+                <h2>Home</h2>
+                {{!-- <svg class="strokesvg" viewBox="0 0 45.36 52.38"><polygon class="navarrow" points="43.36 26.19 1 1.73 1 50.65 43.36 26.19"/></svg>       --}}
+            </a>     
+        </span>
+        <span class="second">
+            <a href="./HTML/credits.html">
+                <h2>Credits</h2>
+                {{!-- <svg class="strokesvg" viewBox="0 0 45.36 52.38"><polygon class="navarrow" points="43.36 26.19 1 1.73 1 50.65 43.36 26.19"/></svg> --}}
+            </a>
+        </span>
+    </nav>
+    
+    <!-- List displaying form data -->
+    <main>
+        {{#each recordings}}
+            <button onclick="audioSelect(this)" class="recordingsButton" id="{{this._id}}">{{this.name}}</button>
+        {{/each}}
+    </main>
+
+    <div class="mainbar">
+        <h3>File Name:</h3>
+        <p id="fileName"></p>
+        <h3>Date + Time Recorded:</h3>
+        <p id="Date"></p>
+        <audio id="audioControl" controls src="" type="audio/mpeg"></audio>
+    </div>
+
+    <script>
+        function audioSelect(btn) {
+            const audioId = btn.getAttribute('id')
+            const options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+            fetch('/recordingsDirectory/get?id='+audioId, options)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('fileName').innerHTML = data.name
+                document.getElementById('Date').innerHTML = data.date
+                document.getElementById('audioControl').setAttribute('src', './uploads/'+audioId+'.mp3') 
+            })
+        }
+
+        var buttons = document.getElementsByClassName("recordingsButton")
+  
+        for (var i = 0; i < buttons.length; i++) {
+            if (i%2 == 0) {
+                buttons.item(i).style.backgroundColor = "#FF4E4E";
+                buttons.item(i).style.color = "#fbf5f5";
+            } else {
+                buttons.item(i).style.backgroundColor = "#e6e4e1";
+                buttons.item(i).style.color = "#FF4E4E";
+            }
+        }
+    </script>
+
+</div>
