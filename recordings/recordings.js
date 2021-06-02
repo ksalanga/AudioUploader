@@ -26,6 +26,7 @@ var type = upload.single('audio-file') // bool to check for memory limit here: t
 
 router.post('/', type, (req, res) => {
     res.status(200)
+    res.send('OK')
 })
 
 router.delete('/delete', (req, res) => {
