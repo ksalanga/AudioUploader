@@ -39,7 +39,7 @@
                     "Content-Type": "application/json"
                 }
             }
-            fetch('/recordingsDirectory/get?id='+audioId, options)
+            fetch('/recordingsDirectory?id='+audioId, options)
             .then(response => response.json())
             .then(data => {
                 document.getElementById('fileName').innerHTML = data.name
