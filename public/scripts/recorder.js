@@ -20,7 +20,9 @@ recordButton.onclick = function() {
 
 let form = document.getElementById('mp3Form');
 
-form.onsubmit = () => {
+form.addEventListener("submit", submitAudio) 
+
+function submitAudio(event) {
   var fileName = form.elements[0].value
 
   if (fileName == "") {
@@ -35,7 +37,11 @@ form.onsubmit = () => {
       body: formData
     }
     fetch('/recordingsDirectory', options)
+    document.getElementById('submitField').value = ''
+    document.getElementById('finishedRecording').remove()
+    blobObj = null
   } else {
     alert('Record some Audio to upload')
   }
+  event.preventDefault()
 }

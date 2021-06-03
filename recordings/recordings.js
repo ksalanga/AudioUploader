@@ -40,7 +40,7 @@ router.delete('/delete', (req, res) => {
     })
 })
 
-router.get('/get', (req, res) => {
+router.get('/', (req, res) => {
     var database = db.get().db('AudioJungle')
     var recordings = database.collection('recordings')
     recordings.findOne({"_id": ObjectId(req.query.id)}, function(err, result) {
@@ -53,11 +53,11 @@ router.get('/get', (req, res) => {
             })
         }
         res.status(200)
-        let current_datetime = result.date
-        let formatted_date = (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + "-" + current_datetime.getFullYear() + " at " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+        // let current_datetime = result.date
+        // let formatted_date = (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + "-" + current_datetime.getFullYear() + " at " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
         res.json({
             name: result.name,
-            date: formatted_date
+            date: result.date
         })
     })
 })
