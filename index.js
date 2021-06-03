@@ -1,8 +1,6 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const path = require('path')
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
-const xhr = new XMLHttpRequest()
 const db = require('./db')
 
 // Launch Express Server
@@ -75,10 +73,10 @@ db.connect(function(err) {
 
 process.on('SIGINT', function() {
   db.close(function () {
-    console.log('Disconnected on app termination');
-    process.exit(0);
-  });
-});
+    console.log('Disconnected on app termination')
+    process.exit(0)
+  })
+})
 
 // 404 Page not found
 app.use((req, res, next) => {
