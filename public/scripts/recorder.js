@@ -5,16 +5,32 @@ let recordButton = document.getElementById("record");
 var blobObj = null
 
 recordButton.onclick = function() {
+  if (blobObj != null) {
+    close()
+  }
+
   record({wasmURL: "/scripts/vmsg.wasm"}).then(blob => {
     blobObj = blob
     
+    // Append Create Recording to the end of the Box
     var tag = document.createElement("p")
     tag.id="finishedRecording"
     var text = document.createTextNode("Audio File Recorded")
+    var exitButton = document.createElement("button")
+    exitButton.id = "close"
+    exitButton.innerHTML = "X"
+    exitButton.onclick = close
     tag.appendChild(text)
+    tag.appendChild(exitButton)
     var element = document.getElementById("box")
     element.appendChild(tag)
-    document.getElementById('box').appendChild(a)
+
+    // Append Audio Preview
+    var url = URL.createObjectURL(blob);
+    var preview = document.createElement('audio');
+    preview.controls = true;
+    preview.src = url;
+    document.getElementsByClassName("mainbar")[0].appendChild(preview);
   })
 }
 
@@ -38,10 +54,16 @@ function submitAudio(event) {
     }
     fetch('/recordingsDirectory', options)
     document.getElementById('submitField').value = ''
-    document.getElementById('finishedRecording').remove()
-    blobObj = null
+    close()
   } else {
     alert('Record some Audio to upload')
   }
   event.preventDefault()
+}
+
+close = function() {
+  document.getElementById('finishedRecording').remove()
+  blobObj = null
+  var audioPreview = document.getElementsByTagName("audio")[0]
+  audioPreview.remove()
 }

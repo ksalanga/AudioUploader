@@ -21,6 +21,23 @@ h1, h2, h3, p, ul{
     cursor: pointer;
 }
 
+#finishedRecording {
+    position: relative;
+    text-align: center;
+    top: 5px;
+}
+
+#close {
+    font-weight: bold;
+    background-color: white;
+    color:#ff3d3d;
+    text-decoration: none;
+    border-radius: .5em;
+    left: 5px;
+    position: relative;
+	display: inline; 
+}
+
 #parent {
     position: relative;
 }
