@@ -9,7 +9,8 @@ const moment = require('moment')
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
-            let path = './uploads'
+            // Multer looks at the current directory because it operates separate from express
+            let path = './public/uploads'
             fs.mkdirsSync(path)
             callback(null, path)
         },
