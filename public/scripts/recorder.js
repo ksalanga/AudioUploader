@@ -52,6 +52,7 @@ function submitAudio(event) {
       method: 'POST',
       body: formData
     }
+
     fetch('/recordingsDirectory', options)
     document.getElementById('submitField').value = ''
     close()

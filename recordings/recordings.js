@@ -4,11 +4,18 @@ const multer = require('multer')
 const fs = require('fs-extra')
 const db = require('../db')
 const { ObjectId } = require('bson')
-const moment = require('moment')
+var maxSize = 5 * Math.pow(10,9)
 
 const upload = multer({
+    fileFilter: function (req, file, cb) {
+        console.log('file filter maybe?')
+        console.log(file)
+        cb(null, true)
+    },
+    limits: { fileSize: maxSize },
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
+            console.log(req)
             // Multer looks at the root directory because it operates separate from express
             let path = './public/uploads'
             fs.mkdirsSync(path)
@@ -23,14 +30,14 @@ const upload = multer({
     })
 })
 
-var type = upload.single('audio-file') // bool to check for memory limit here: ternary operator
+var type = upload.single('audio-file')
 
 router.post('/', type, (req, res) => {
     res.status(200)
     res.send('OK')
 })
 
-router.delete('/delete', (req, res) => {
+router.delete('/', (req, res) => {
     deleteRecording(req.body._id).then((dbResponse) => {
         if (dbResponse == null || dbResponse == undefined) {
             res.status(400).json({ msg: 'ID already deleted' })
@@ -53,11 +60,13 @@ router.get('/', (req, res) => {
             })
         }
         res.status(200)
-        // let current_datetime = result.date
-        // let formatted_date = (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + "-" + current_datetime.getFullYear() + " at " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+
         res.json({
             name: result.name,
-            date: result.date
+            date: result.date.toLocaleString('default', {
+                dateStyle: 'full',
+                timeStyle: 'long'
+            })
         })
     })
 })
@@ -67,7 +76,7 @@ async function createRecording(req) {
     var recordings = database.collection('recordings')
     var audioObject = {
         name: req.body.name,
-        date: moment().format('MMMM Do YYYY, h:mm:ss a')
+        date: new Date()
     }
 
     var dbResponse = await recordings.insertOne(audioObject)
