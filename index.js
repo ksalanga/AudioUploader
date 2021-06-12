@@ -2,6 +2,7 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const path = require('path')
 const db = require('./db')
+require('dotenv').config()
 
 // Launch Express Server
 const app = express()
