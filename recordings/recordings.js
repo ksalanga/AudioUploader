@@ -1,44 +1,40 @@
 const express = require('express')
 const router = express.Router()
 const multer = require('multer')
-const fs = require('fs-extra')
 const db = require('../db')
 const { ObjectId } = require('bson')
-var maxSize = 5 * Math.pow(10,9)
+const { Storage } = require('@google-cloud/storage')
+
+const storage = new Storage({projectId: process.env.GCLOUD_PROJECT, credentials: {client_email: process.env.GCLOUD_CLIENT_EMAIL, private_key: process.env.GCLOUD_PRIVATE_KEY}})
 
 const upload = multer({
-    fileFilter: function (req, file, cb) {
-        console.log('file filter maybe?')
-        console.log(file)
-        cb(null, true)
-    },
-    limits: { fileSize: maxSize },
-    storage: multer.diskStorage({
-        destination: (req, file, callback) => {
-            console.log(req)
-            // Multer looks at the root directory because it operates separate from express
-            let path = './public/uploads'
-            fs.mkdirsSync(path)
-            callback(null, path)
-        },
-        filename: (req, file, callback) => {
-            createRecording(req).then((id) => {
-                var file_name = id + '.mp3'
-                callback(null, file_name)
-            })
+    storage: multer.memoryStorage(),
+    limits: {
+        // 2 megabytes
+        fileSize: 2 * 1024 * 1024
+    }
+}).single('audio-file')
+
+const bucket = storage.bucket(process.env.GCS_BUCKET) 
+
+router.post('/', (req, res) => {
+    upload(req, res, err => {
+        if (err instanceof multer.MulterError) {
+            res.status(300)
+            res.JSON({error: 'MulterError'})
+            return
+        } else if (err) {
+            res.status(300)
+            res.JSON({error: err.message})
+            return
+        } else {
+            createRecording(req, res)
         }
     })
 })
 
-var type = upload.single('audio-file')
-
-router.post('/', type, (req, res) => {
-    res.status(200)
-    res.send('OK')
-})
-
 router.delete('/', (req, res) => {
-    deleteRecording(req.body._id).then((dbResponse) => {
+    db.deleteRecording(req.body._id).then((dbResponse) => {
         if (dbResponse == null || dbResponse == undefined) {
             res.status(400).json({ msg: 'ID already deleted' })
         } else {
@@ -59,6 +55,7 @@ router.get('/', (req, res) => {
                 error: 'Recording no longer in the database'
             })
         }
+
         res.status(200)
 
         res.json({
@@ -66,32 +63,38 @@ router.get('/', (req, res) => {
             date: result.date.toLocaleString('default', {
                 dateStyle: 'full',
                 timeStyle: 'long'
-            })
+            }),
+            href: result.href
         })
     })
 })
 
-async function createRecording(req) {
-    var database = db.get().db('AudioJungle')
-    var recordings = database.collection('recordings')
-    var audioObject = {
-        name: req.body.name,
-        date: new Date()
+async function createRecording(req, res) {
+    const recordingsSizeLimit = 4.5 * Math.pow(10, 9)
+    const currentRecordingsSize = await db.getStorageSize()
+    if ((currentRecordingsSize + req.file.size) < recordingsSizeLimit) {
+        db.storeRecording(req).then(id => {
+            const newFileName = id + "-" + req.body.name + '.mp3'
+            const blob = bucket.file(newFileName)
+            const blobStream = blob.createWriteStream({resumable: false})
+    
+            blobStream.on("error", err => {throw new Error(err.message)})
+    
+            blobStream.on("finish", () => {
+                const publicURL = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${blob.name}`
+                var database = db.get().db('AudioJungle')
+                var recordings = database.collection('recordings')
+                recordings.updateOne({"_id": ObjectId(id)}, {$set: {"href": publicURL, "size": req.file.size}})
+            })
+    
+            blobStream.end(req.file.buffer)
+            res.status(200)
+            res.send('OK')
+        })
+    } else {
+        res.status(300)
+        res.send({StorageError: "Audio File Storage limit has been exceeded"})
     }
-
-    var dbResponse = await recordings.insertOne(audioObject)
-    return dbResponse.insertedId
-}
-
-async function deleteRecording(id) {
-    var database = db.get().db('AudioJungle')
-    var recordings = database.collection('recordings')
-    var audioToDelete = {
-        _id: ObjectId(id)
-    }
-
-    var deleteResult = await recordings.deleteOne(audioToDelete)
-    return deleteResult
 }
 
 module.exports = router
