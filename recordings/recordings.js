@@ -21,11 +21,11 @@ router.post('/', (req, res) => {
     upload(req, res, err => {
         if (err instanceof multer.MulterError) {
             res.status(300)
-            res.JSON({error: 'MulterError'})
+            res.json({error: 'MulterError'})
             return
         } else if (err) {
             res.status(300)
-            res.JSON({error: err.message})
+            res.json({error: err.message})
             return
         } else {
             createRecording(req, res)
@@ -89,7 +89,7 @@ async function createRecording(req, res) {
     
             blobStream.end(req.file.buffer)
             res.status(200)
-            res.send('OK')
+            res.json({message: 'OK'})
         })
     } else {
         res.status(300)
