@@ -54,6 +54,12 @@ function submitAudio(event) {
     }
 
     fetch('/recordingsDirectory', options)
+    .then(response => response.json())
+    .then(data => {
+        if (data.StorageError != null || data.StorageError != undefined) {
+          alert('The Storage Limit for Audio Uploader has been exceeded')
+        }
+    })
     document.getElementById('submitField').value = ''
     close()
   } else {
