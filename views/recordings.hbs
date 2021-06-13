@@ -19,6 +19,7 @@
     <main>
         {{#each recordings}}
             <button onclick="audioSelect(this)" class="recordingsButton" id="{{this._id}}">{{this.name}}</button>
+            <button id="close">x</button>
         {{/each}}
     </main>
 
