@@ -93,7 +93,7 @@ async function createRecording(req, res) {
         })
     } else {
         res.status(300)
-        res.send({StorageError: "Audio File Storage limit has been exceeded"})
+        res.json({StorageError: "Audio File Storage limit has been exceeded"})
     }
 }
 
