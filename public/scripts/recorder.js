@@ -17,7 +17,7 @@ recordButton.onclick = function() {
     tag.id="finishedRecording"
     var text = document.createTextNode("Audio File Recorded")
     var exitButton = document.createElement("button")
-    exitButton.id = "close"
+    exitButton.className = "close"
     exitButton.innerHTML = "X"
     exitButton.onclick = close
     tag.appendChild(text)
