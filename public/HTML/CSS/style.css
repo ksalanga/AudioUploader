@@ -27,7 +27,7 @@ h1, h2, h3, p, ul{
     top: 5px;
 }
 
-#close {
+.close {
     font-weight: bold;
     background-color: white;
     color:#ff3d3d;
