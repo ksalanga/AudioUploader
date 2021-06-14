@@ -33,16 +33,6 @@ router.post('/', (req, res) => {
     })
 })
 
-router.delete('/', (req, res) => {
-    db.deleteRecording(req.body._id).then((dbResponse) => {
-        if (dbResponse == null || dbResponse == undefined) {
-            res.status(400).json({ msg: 'ID already deleted' })
-        } else {
-            res.status(200)
-        }
-    })
-})
-
 router.get('/', (req, res) => {
     var database = db.get().db('AudioJungle')
     var recordings = database.collection('recordings')
@@ -66,6 +56,21 @@ router.get('/', (req, res) => {
             }),
             href: result.href
         })
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    db.deleteRecording(id).then((dbResponse) => {
+        if (dbResponse == null || dbResponse == undefined) {
+            res.status(404).json({ msg: 'ID already deleted' })
+        } else {
+            bucket.deleteFiles({
+                prefix: id
+            })
+
+            res.status(200).json({msg: `Audio File of ID: ${req.params.id} has been deleted from Storage and DB`})
+        }
     })
 })
 

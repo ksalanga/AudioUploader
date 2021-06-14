@@ -18,8 +18,10 @@
     <!-- List displaying form data -->
     <main>
         {{#each recordings}}
-            <button onclick="audioSelect(this)" class="recordingsButton" id="{{this._id}}">{{this.name}}</button>
-            <button id="close">x</button>
+        <div id="{{this._id}}">
+            <button onclick="audioSelect(this)" class="recordingsButton">{{this.name}}</button>
+            <button onclick="audioDelete(this)" class="close">X</button>
+        </div>
         {{/each}}
     </main>
 
@@ -33,19 +35,31 @@
 
     <script>
         function audioSelect(btn) {
-            const audioId = btn.getAttribute('id')
+            const audioID = btn.parentElement.id
             const options = {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
                 }
             }
-            fetch('/recordingsDirectory?id='+audioId, options)
+            fetch('/recordingsDirectory?id='+audioID, options)
             .then(response => response.json())
             .then(data => {
                 document.getElementById('fileName').innerHTML = data.name
                 document.getElementById('Date').innerHTML = data.date
                 document.getElementById('audioControl').setAttribute('src', data.href) 
+            })
+        }
+
+        function audioDelete(btn) {
+            const audioID = btn.parentElement.id
+            const options = {
+                method: "DELETE",
+            }
+            fetch('/recordingsDirectory/'+audioID, options)
+            .then(response => response.json())
+            .then(data => {
+                btn.parentElement.remove()
             })
         }
 
