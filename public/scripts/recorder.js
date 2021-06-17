@@ -54,7 +54,12 @@ function submitAudio(event) {
     }
 
     fetch('/recordingsDirectory', options)
-    .then(response => response.json())
+    .then(response => {
+      if (response.status == 429) {
+        alert('Rate Limit Exceeded')
+      }
+      response.json()
+    })
     .then(data => {
         if (data.StorageError != null || data.StorageError != undefined) {
           alert('The Storage Limit for Audio Uploader has been exceeded')
