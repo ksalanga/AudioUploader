@@ -45,18 +45,6 @@ const uploadAudioLimiter = rateLimit({
   })
 
 router.post('/', uploadAudioLimiter, (req, res) => {
-    // rate limit ends when the middleware no longer gives a JSON rateLimit key
-    // if (req.rateLimit == null || req.rateLimit == undefined) {
-    //     res.status(429).json({
-    //         msg: 'Too Many Requests',
-    //         limit: req.limit,
-    //         resetTime: req.resetTime.toLocaleString('default', {
-    //             dateStyle: 'full',
-    //             timeStyle: 'long'
-    //         })
-    //     })
-    //     return
-    // }
     upload(req, res, err => {
         if (err instanceof multer.MulterError) {
             console.log(multer.MulterError)
@@ -86,9 +74,7 @@ router.get('/', (req, res) => {
             })
         }
 
-        res.status(200)
-
-        res.json({
+        return res.status(200).json({
             name: result.name,
             date: result.date.toLocaleString('default', {
                 dateStyle: 'full',
