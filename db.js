@@ -59,7 +59,9 @@ exports.deleteRecording = async function deleteRecording(id) {
   }
 
   var recordingObj = await recordings.findOne(audioToDelete)
-  var size = recordingObj == null ? 0 : recordingObj.size * -1
+  if (recordingObj == null) return null
+  
+  var size = recordingObj.size * -1
 
   var storage = database.collection('storage')
 
