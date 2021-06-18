@@ -17,14 +17,13 @@ app.set('view engine', 'hbs')
 app.engine('hbs', handlebars({
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
     extname: 'hbs',
-    defaultLayout: 'index',
-    partialsDir: path.join(__dirname, 'views', 'partials'),
+    defaultLayout: 'index'
 }))
 
 // Body Parser Middleware for JSON
 app.use(express.json())
 
-//to handle url encoded data
+// Handle url encoded data
 app.use(express.urlencoded({extended: false}))
 
 // Error Handling a request that is poorly formatted
@@ -35,14 +34,14 @@ app.use((err, req, res, next) => {
   next()
 })
 
-// Basic Route
+// Home Directory
 app.get('/', (req, res) => {
   res.render('main', {
       title: 'Main Page'
   })
 })
 
-// Route to Recordings
+// Recordings Directory
 app.get('/recordings', (req, res) => {
   var database = db.get().db('AudioJungle')
   database.collection('recordings').find().sort({ "date": -1 }).toArray(function(err, docs) {
@@ -53,14 +52,13 @@ app.get('/recordings', (req, res) => {
   })
 })
 
-// Route for Posting Recordings
+// Recordings API
 app.use('/recordingsDirectory', require('./recordings/recordings'))
 
-// Static Site
-app.use(express.static('public'))
-
-// Scripts for vmsg
-app.use('/scripts', express.static(path.join(__dirname, 'node_modules', 'vmsg')))
+// Static Files
+app.use(express.static('public')) // Public Directory
+app.use('/scripts', express.static(path.join(__dirname, 'node_modules', 'vmsg'))) // Scripts for vmsg
+app.use('/credits', express.static(path.join(__dirname, 'public', 'HTML', 'credits.html'))) // Credits
 
 // Server Listening & connecting to MongoDB
 db.connect(function(err) {
@@ -80,9 +78,6 @@ process.on('SIGINT', function() {
 })
 
 // 404 Page not found
-app.use((req, res, next) => {
-  res.status(404).send({
-      status: 404,
-      error: 'Not found'
-    })
+app.use((req, res) => {
+  res.status(404).render('notFound', {title: 'Not Found'})
 })
