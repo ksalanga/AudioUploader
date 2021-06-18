@@ -8,7 +8,7 @@
             </a>     
         </span>
         <span class="second">
-            <a href="./HTML/credits.html">
+            <a href="./credits">
                 <h2>Credits</h2>
                 {{!-- <svg class="strokesvg" viewBox="0 0 45.36 52.38"><polygon class="navarrow" points="43.36 26.19 1 1.73 1 50.65 43.36 26.19"/></svg> --}}
             </a>
@@ -53,14 +53,11 @@
 
         function audioDelete(btn) {
             const audioID = btn.parentElement.id
+            btn.parentElement.remove()
             const options = {
                 method: "DELETE",
             }
             fetch('/recordingsDirectory/'+audioID, options)
-            .then(response => response.json())
-            .then(data => {
-                btn.parentElement.remove()
-            })
         }
 
         var buttons = document.getElementsByClassName("recordingsButton")
