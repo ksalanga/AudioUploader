@@ -32,9 +32,9 @@ const bucket = storage.bucket(process.env.GCS_BUCKET)
 
 const uploadAudioLimiter = rateLimit({
     windowMs: 30 * 60000, // 30 minutes
-    max: 5, // start blocking after 5 requests
+    max: 5, // start blocking after this many requests
     handler: function(req, res, /*next*/) {
-        res.status(429).json({
+        return res.status(429).json({
             limit: req.rateLimit.limit,
             resetTime: req.rateLimit.resetTime.toLocaleString('default', {
                 dateStyle: 'full',
@@ -48,13 +48,9 @@ router.post('/', uploadAudioLimiter, (req, res) => {
     upload(req, res, err => {
         if (err instanceof multer.MulterError) {
             console.log(multer.MulterError)
-            res.status(300)
-            res.json({error: 'File Size exceeds 1 megabyte'})
-            return
+            return res.status(300).json({error: 'File Size exceeds 1 megabyte'})
         } else if (err) {
-            res.status(300)
-            res.json({error: err.message})
-            return
+            return res.status(300).json({error: err.message})
         } else {
             createRecording(req, res)
         }
@@ -68,10 +64,7 @@ router.get('/', (req, res) => {
         if (err) throw err
 
         if (result == null || result == undefined) {
-            return res.status(400).json({
-                status: 404,
-                error: 'Recording no longer in the database'
-            })
+            return res.status(404).redirect('/recordings')
         }
 
         return res.status(200).json({
@@ -93,6 +86,9 @@ router.delete('/:id', (req, res) => {
         } else {
             bucket.deleteFiles({
                 prefix: id
+            }).catch(err => {
+                console.log(err)
+                throw err
             })
 
             res.status(200).json({msg: `Audio File of ID: ${req.params.id} has been deleted from Storage and DB`})
@@ -101,7 +97,7 @@ router.delete('/:id', (req, res) => {
 })
 
 async function createRecording(req, res) {
-    const recordingsSizeLimit = 4.5 * Math.pow(10, 9)
+    const recordingsSizeLimit = 4.5 * Math.pow(10, 9) // 4.5 megabyte size limit
     const currentRecordingsSize = await db.getStorageSize()
     if ((currentRecordingsSize + req.file.size) < recordingsSizeLimit) {
         db.storeRecording(req).then(id => {
@@ -123,8 +119,7 @@ async function createRecording(req, res) {
             res.json({message: 'OK'})
         })
     } else {
-        res.status(300)
-        res.json({StorageError: "Audio File Storage limit has been exceeded"})
+        return res.status(400).json({StorageError: "Audio File Storage limit has been exceeded"})
     }
 }
 
