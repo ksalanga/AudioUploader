@@ -53,17 +53,19 @@ function submitAudio(event) {
       body: formData
     }
 
+    // Note For Self:
+    // fetch callbacks require a return statement to access the data
+    // Originally, the response callback had a curly brace. You need to explicitly add a return statement for that to handle
+    // the next call with the data callback
     fetch('/recordingsDirectory', options)
-    .then(response => {
-      if (response.status == 429) {
-        alert('Rate Limit Exceeded')
-      }
-      response.json()
-    })
+    .then(response => response.json()) 
     .then(data => {
-        if (data.StorageError != null || data.StorageError != undefined) {
-          alert('The Storage Limit for Audio Uploader has been exceeded')
-        }
+      if (data.StorageError != null || data.StorageError != undefined) {
+        alert('The Storage Limit for Audio Uploader has been exceeded')
+      }
+      if (data.resetTime != null) {
+        alert(`The ${data.limit} limit has been reached. Next Reset to upload ${data.limit} more audio messages is at ${data.resetTime}`)
+      }
     })
     document.getElementById('submitField').value = ''
     close()
