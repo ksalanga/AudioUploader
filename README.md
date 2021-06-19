@@ -56,11 +56,13 @@ After seeing all of the recordings, go and check out the Credits tab in the top 
 ## Technologies 💻:  
 ### Frontend:  
 - HTML/CSS
+- Templating
+    - Handlebars
 - JavaScript
     - VMSG Library
     - Plain JS for buttons
   
-#### Backend:  
+### Backend:  
 - NodeJS
     - ExpressJS
     - Multer
