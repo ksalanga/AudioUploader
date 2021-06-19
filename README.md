@@ -25,12 +25,12 @@ You can also tamper with the sliders which are:
 
 respectively.  
 
----
+  
 
 Once you're all set and have pressed check, make sure to name your file or it won't send and all your progress is lost!  
 You can now upload your recording by clicking the upload button or pressing enter.  
 __Congratulations!__ 🎊  
-You've sent your audio to AudioUploader!
+You've sent your audio to AudioUploader! Now, you can head over to your new message by clicking "Recordings" in the top right of the Homepage.
 
 ---
 
@@ -38,8 +38,18 @@ You've sent your audio to AudioUploader!
 
 ---
 
-### Recordings Directory  
+### Recordings Directory 🎵  
+Here is the list of recordings that have been recorded by you and other people!  
+You can click your recording or other people's recordings.  
+Once clicked, the File Name, Date, and the Audio Controls are available for you to see and use at the bottom.  
+Since this is a public directory you can delete your recordings or even other people's recordings with the x button on the right. (Maybe ask for their permission before deleting it 😉)  
+After seeing all the recordings, go and check out the Credits tab in the top right to see the creator!  
+
+---
+
 ![Image](https://i.gyazo.com/77a318592faf84f5bc6564e113cdf55a.png)  
 
+---
 
-### Technologies  
+
+## Technologies  
