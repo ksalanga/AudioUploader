@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index"
+    "dev": "nodemon index.js"
   },
   "author": "Kenneth Salanga",
   "license": "ISC"

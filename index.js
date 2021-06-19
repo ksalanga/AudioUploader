@@ -7,9 +7,6 @@ require('dotenv').config()
 // Launch Express Server
 const app = express()
 
-// PORT
-const PORT = process.env.PORT || 5000
-
 // Activate Handlebars engine
 app.set('view engine', 'hbs')
 
@@ -61,13 +58,16 @@ app.use('/scripts', express.static(path.join(__dirname, 'node_modules', 'vmsg'))
 app.use('/credits', express.static(path.join(__dirname, 'public', 'HTML', 'credits.html'))) // Credits
 
 // Server Listening & connecting to MongoDB
-db.connect(function(err) {
-  if (err) {
-    console.log('Unable to connect to Mongo.')
-    process.exit(1)
-  } else {
-    app.listen(PORT, () => console.log(`Listening on Port: ${PORT}`))
-  }
+app.listen(process.env.PORT || 5000, () => {
+  db.connect(function(err) {
+    if (err) {
+      console.log('Unable to connect to Mongo.')
+      process.exit(1)
+    } else {
+      
+    }
+  })
+  console.log(`Listening`)
 })
 
 process.on('SIGINT', function() {
