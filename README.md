@@ -60,11 +60,11 @@ After seeing all of the recordings, go and check out the Credits tab in the top 
     - Handlebars
 - JavaScript
     - VMSG Library
-    - Plain JS for buttons
+    - Plain JS for buttons & miscellaneous formatting
   
 ### Backend:  
 - NodeJS
-    - ExpressJS
+    - Express
     - Multer
 - Storage
     - Google Cloud Storage
