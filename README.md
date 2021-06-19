@@ -21,6 +21,7 @@ After you finish your awesome message, you can press the "✓" button to have it
 You can also tamper with the sliders which are:
 - Pitch
 - Gain
+
 Respectively.  
 Once you're all set and have pressed check, make sure to name your file or it won't send and all your progress is lost!  
 You can now upload your recording by clicking the upload button or pressing enter.  
