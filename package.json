@@ -21,6 +21,10 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "engines": {
+    "node": "16.2.0",
+    "npm": "7.13.0"
+  },
   "author": "Kenneth Salanga",
   "license": "ISC"
 }
