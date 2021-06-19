@@ -22,14 +22,21 @@ You can also tamper with the sliders which are:
 - Pitch
 - Gain
   
-  
-Respectively.  
+
+respectively.  
+
+---
+
 Once you're all set and have pressed check, make sure to name your file or it won't send and all your progress is lost!  
 You can now upload your recording by clicking the upload button or pressing enter.  
-**Congratulations!**🎊  
+__Congratulations!__ 🎊  
 You've sent your audio to AudioUploader!
 
+---
+
 ![Image](https://i.gyazo.com/89aa4b270138ff00ac40124c341ce1ba.png)  
+
+---
 
 ### Recordings Directory  
 ![Image](https://i.gyazo.com/77a318592faf84f5bc6564e113cdf55a.png)  
