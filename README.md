@@ -9,12 +9,18 @@ This simple web application will let you record audio, and it will be saved in t
 ### Homepage 🏠  
 This page is where you can start recording yourself!  
 Once you click the microphone button, a prompt in the bottom will pop up.  
-![Image](https://i.gyazo.com/f819306149f5b769fb9adec19913daf5.png)
+
+---
+
+![Image](https://i.gyazo.com/f819306149f5b769fb9adec19913daf5.png)  
+
+---
+
 There, you can click the "●" button to start recording, and then, you can click it again to stop the recording.  
 After you finish your awesome message, you can press the "✓" button to have it ready to be sent.  
 You can also tamper with the sliders which are:
 - Pitch
-- Gain  
+- Gain
 Respectively.  
 Once you're all set and have pressed check, make sure to name your file or it won't send and all your progress is lost!  
 You can now upload your recording by clicking the upload button or pressing enter.  
