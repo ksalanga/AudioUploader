@@ -42,8 +42,9 @@ You've sent your audio to AudioUploader! Now, you can head over to your new mess
 Here is the list of recordings that have been recorded by you and other people!  
 You can click your recording or other people's recordings.  
 Once clicked, the File Name, Date, and the Audio Controls are available for you to see and use at the bottom.  
-Since this is a public directory you can delete your recordings or even other people's recordings with the x button on the right. (Maybe ask for their permission before deleting it 😉)  
-After seeing all the recordings, go and check out the Credits tab in the top right to see the creator!  
+Since this is a public directory, you can delete your recordings or even other people's recordings with the x button on the right. (Maybe ask for their permission before deleting it 😉)  
+After seeing all of the recordings, go and check out the Credits tab in the top right to see the creator!  
+
 
 ---
 
@@ -52,4 +53,23 @@ After seeing all the recordings, go and check out the Credits tab in the top rig
 ---
 
 
-## Technologies  
+## Technologies 💻:  
+### Frontend:  
+- HTML/CSS
+- JavaScript
+    - VMSG Library
+    - Plain JS for buttons
+  
+#### Backend:  
+- NodeJS
+    - ExpressJS
+    - Multer
+- Storage
+    - Google Cloud Storage
+- Database
+    - MongoDB
+- REST API for:
+    - Uploading
+    - Deletion
+    - Getting Recordings
+    - Showing Recordings Data
