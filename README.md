@@ -7,6 +7,7 @@ This simple web application will let you record audio, and it will be saved in t
 ## Client Use:  
 
 ### Homepage 🏠  
+__Try Out The Site__ [here](https://audiorecording-uploader.herokuapp.com/)
 This page is where you can start recording yourself!  
 Once you click the microphone button, a prompt in the bottom will pop up.  
 
