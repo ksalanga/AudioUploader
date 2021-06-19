@@ -58,7 +58,7 @@ app.use('/scripts', express.static(path.join(__dirname, 'node_modules', 'vmsg'))
 app.use('/credits', express.static(path.join(__dirname, 'public', 'HTML', 'credits.html'))) // Credits
 
 // Server Listening & connecting to MongoDB
-app.listen(process.env.PORT || 5000, () => {
+app.listen(44886, () => {
   db.connect(function(err) {
     if (err) {
       console.log('Unable to connect to Mongo.')
