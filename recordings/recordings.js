@@ -1,10 +1,13 @@
 const express = require('express')
 const router = express.Router()
+const dotenv = require('dotenv')
 const multer = require('multer')
 const db = require('../db')
 const { ObjectId } = require('bson')
 const { Storage } = require('@google-cloud/storage')
 const rateLimit = require("express-rate-limit")
+
+dotenv.config()
 
 const storage = new Storage({projectId: process.env.GCLOUD_PROJECT, credentials: {client_email: process.env.GCLOUD_CLIENT_EMAIL, private_key: process.env.GCLOUD_PRIVATE_KEY}})
 
