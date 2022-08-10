@@ -9,7 +9,13 @@ const rateLimit = require("express-rate-limit")
 
 dotenv.config()
 
-const storage = new Storage({projectId: process.env.GCLOUD_PROJECT, credentials: {client_email: process.env.GCLOUD_CLIENT_EMAIL, private_key: process.env.GCLOUD_PRIVATE_KEY}})
+var gcloud_private_key = process.env.GCLOUD_PRIVATE_KEY
+
+if (process.NODE_ENV !== 'development') {
+    gcloud_private_key = `"${gcloud_private_key}"`
+}
+
+const storage = new Storage({projectId: process.env.GCLOUD_PROJECT, credentials: {client_email: process.env.GCLOUD_CLIENT_EMAIL, private_key: gcloud_private_key}})
 
 const upload = multer({
     storage: multer.memoryStorage(),
