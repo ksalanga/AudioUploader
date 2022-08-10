@@ -97,9 +97,10 @@ router.delete('/:id', (req, res) => {
 })
 
 async function createRecording(req, res) {
-    const recordingsSizeLimit = 4.5 * Math.pow(10, 9) // 4.5 megabyte size limit
+    const recordingsSizeLimit = 400 // 400 entries
     const currentRecordingsSize = await db.getStorageSize()
-    if ((currentRecordingsSize + req.file.size) < recordingsSizeLimit) {
+
+    if (currentRecordingsSize < recordingsSizeLimit) {
         db.storeRecording(req).then(id => {
             const newFileName = id + "-" + req.body.name + '.mp3'
             const blob = bucket.file(newFileName)
@@ -119,7 +120,7 @@ async function createRecording(req, res) {
             res.json({message: 'OK'})
         })
     } else {
-        return res.status(400).json({StorageError: "Audio File Storage limit has been exceeded"})
+        return res.status(400).json({StorageError: "Audio File Storage limit of 400 recordings has been exceeded"})
     }
 }
 
