@@ -1,0 +1,4 @@
+.env
+OldCodeAndComments
+node_modules
+secrets.json
