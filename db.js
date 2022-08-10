@@ -44,10 +44,6 @@ exports.storeRecording = async function storeRecording(req) {
 
   var dbResponse = await recordings.insertOne(audioObject)
   
-  var storage = database.collection('storage')
-  // Add to the overall file size
-  await storage.updateOne({}, {$inc: {"size": req.file.size}})
-
   return dbResponse.insertedId.toString()
 }
 
@@ -60,23 +56,19 @@ exports.deleteRecording = async function deleteRecording(id) {
 
   var recordingObj = await recordings.findOne(audioToDelete)
   if (recordingObj == null) return null
-  
-  var size = recordingObj.size * -1
-
-  var storage = database.collection('storage')
-
-  await storage.updateOne({}, {$inc: {"size": size}})
 
   var deleteResult = await recordings.deleteOne(audioToDelete)
   return deleteResult
 }
 
+// returns the number of recordings in the database
 exports.getStorageSize = async function getStorageSize() {
   var database = state.db.db('AudioJungle')
-  var storage = database.collection('storage')
+  var recordings = database.collection('recordings')
   
-  var storageItem = await storage.findOne({})
-  var size = storageItem.size
+  var recordingsCount = await recordings.countDocuments({})
 
-  return size
+  if (recordingsCount == null) return 0
+  
+  return recordingsCount
 }
