@@ -9,12 +9,7 @@ const rateLimit = require("express-rate-limit")
 
 dotenv.config()
 
-const gcloud_private_key = process.env.GCLOUD_PRIVATE_KEY
-
-// if (process.env.NODE_ENV !== 'development') {
-//     gcloud_private_key = `"${gcloud_private_key}"`
-//     console.log("PRODUCTION BRO!!")
-// }
+const gcloud_private_key = process.env.GCLOUD_PRIVATE_KEY.replace(/\\n/gm, '\n')
 
 const storage = new Storage({projectId: process.env.GCLOUD_PROJECT, credentials: {client_email: process.env.GCLOUD_CLIENT_EMAIL, private_key: gcloud_private_key}})
 
